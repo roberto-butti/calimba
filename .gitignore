@@ -1,0 +1,23 @@
+# Laravel
+/bootstrap/compiled.php
+/vendor
+
+# Configuration
+.env.local.php
+.env.php
+/app/config/local
+/app/config/staging
+/app/config/production
+
+
+# Composer
+composer.phar
+composer.lock
+
+# OS
+.DS_Store
+.idea/
+Thumbs.db
+
+# Packages
+_ide_helpers.php
