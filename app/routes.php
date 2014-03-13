@@ -11,6 +11,9 @@
 |
 */
 
+
+Route::resource('resources', 'ResourcesController');
+
 Route::get('/', function()
 {
 	return View::make('hello');
