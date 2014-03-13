@@ -11,13 +11,9 @@ class ResourcesController extends \BaseController {
 	 */
 	public function index()
 	{
-		//echo  App::environment();die();
 		$resources = Resource::all();
-
-		// load the view and pass the nerds
 		return View::make('resources.index')
 			->with('resources', $resources);
-
 	}
 
 	/**
@@ -37,7 +33,32 @@ class ResourcesController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+	// validate
+		// read more on validation at http://laravel.com/docs/validation
+		$rules = array(
+			'name'       => 'required',
+			'email'      => 'required|email',
+			'skill' => 'required|numeric'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		// process the login
+		if ($validator->fails()) {
+			return Redirect::to('resources/create')
+				->withErrors($validator)
+				->withInput(Input::except('password'));
+		} else {
+			// store
+			$resource = new Resource;
+			$resource->name       = Input::get('name');
+			$resource->email      = Input::get('email');
+			$resource->skill = Input::get('skill');
+			$resource->save();
+
+			// redirect
+			Session::flash('message', 'Successfully created Resource!');
+			return Redirect::to('resources');
+		}
 	}
 
 	/**
@@ -48,7 +69,12 @@ class ResourcesController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		// get the nerd
+		$resource = Resource::find($id);
+
+		// show the view and pass the nerd to it
+		return View::make('resources.show')
+			->with('resource', $resource);
 	}
 
 	/**
@@ -59,7 +85,11 @@ class ResourcesController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$resource = Resource::find($id);
+
+		// show the edit form and pass the nerd
+		return View::make('resources.edit')
+			->with('resource', $resource);
 	}
 
 	/**
@@ -70,7 +100,32 @@ class ResourcesController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		// validate
+		// read more on validation at http://laravel.com/docs/validation
+		$rules = array(
+			'name'       => 'required',
+			'email'      => 'required|email',
+			'skill' => 'required|numeric'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		// process the login
+		if ($validator->fails()) {
+			return Redirect::to('resources/' . $id . '/edit')
+				->withErrors($validator)
+				->withInput(Input::except('password'));
+		} else {
+			// store
+			$resource = Resource::find($id);
+			$resource->name       = Input::get('name');
+			$resource->email      = Input::get('email');
+			$resource->skill = Input::get('skill');
+			$resource->save();
+
+			// redirect
+			Session::flash('message', 'Successfully updated resource!');
+			return Redirect::to('resources');
+		}
 	}
 
 	/**

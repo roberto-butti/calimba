@@ -1,28 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Look! I'm CRUDding</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@extends('layouts.admin')
 
-<nav class="navbar navbar-inverse">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="{{ URL::to('nerds') }}">Nerd Alert</a>
-  </div>
-  <ul class="nav navbar-nav">
-    <li><a href="{{ URL::to('nerds') }}">View All Nerds</a></li>
-    <li><a href="{{ URL::to('nerds/create') }}">Create a Nerd</a>
-  </ul>
-</nav>
+@section('title')
+<h1>Create Resource</h1>
+@stop
 
-<h1>Create a Nerd</h1>
-
-<!-- if there are creation errors, they will show here -->
+@section('content')
 {{ HTML::ul($errors->all()) }}
 
-{{ Form::open(array('url' => 'nerds')) }}
+{{ Form::open(array('url' => 'resources')) }}
 
   <div class="form-group">
     {{ Form::label('name', 'Name') }}
@@ -35,14 +20,13 @@
   </div>
 
   <div class="form-group">
-    {{ Form::label('nerd_level', 'Nerd Level') }}
-    {{ Form::select('nerd_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), Input::old('nerd_level'), array('class' => 'form-control')) }}
+    {{ Form::label('skill', 'Skill') }}
+    {{ Form::select('skill', array('0' => 'Select a Skill', '1' => 'BACKEND', '2' => 'FRONTEND'), Input::old('skill'), array('class' => 'form-control')) }}
   </div>
 
-  {{ Form::submit('Create the Nerd!', array('class' => 'btn btn-primary')) }}
+  {{ Form::submit('Create the Resource!', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
 
-</div>
-</body>
-</html>
+
+@stop
